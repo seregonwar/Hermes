@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DyMain Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vis-network@9.1.2/dist/vis-network.min.css" rel="stylesheet">
+    <link href="css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">DyMain Dashboard</span>
+            <div class="d-flex">
+                <button id="refreshBtn" class="btn btn-outline-light me-2">Aggiorna</button>
+                <button id="exportBtn" class="btn btn-outline-light">Esporta</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2">
+                <div class="list-group">
+                    <a href="#process" class="list-group-item list-group-item-action active" data-bs-toggle="list">
+                        Processo
+                    </a>
+                    <a href="#memory" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                        Memoria
+                    </a>
+                    <a href="#threads" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                        Thread
+                    </a>
+                    <a href="#modules" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                        Moduli
+                    </a>
+                    <a href="#hooks" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                        Hook
+                    </a>
+                    <a href="#assembly" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                        Assembly
+                    </a>
+                    <a href="#calls" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                        Chiamate
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10">
+                <div class="tab-content">
+                    <!-- Process Info -->
+                    <div class="tab-pane fade show active" id="process">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Informazioni Processo</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Dettagli Base</h6>
+                                        <table class="table table-sm">
+                                            <tr>
+                                                <td>PID</td>
+                                                <td id="process-pid">-</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nome</td>
+                                                <td id="process-name">-</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Percorso</td>
+                                                <td id="process-path">-</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Architettura</td>
+                                                <td id="process-arch">-</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Utilizzo Memoria</h6>
+                                        <canvas id="memory-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Memory View -->
+                    <div class="tab-pane fade" id="memory">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Visualizzazione Memoria</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="memory-search" placeholder="Cerca pattern...">
+                                    </div>
+                                    <div class="col-auto">
+                                        <button class="btn btn-primary" id="memory-scan">Scansiona</button>
+                                    </div>
+                                </div>
+                                <div class="memory-view">
+                                    <div id="memory-hex"></div>
+                                    <div id="memory-ascii"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Threads View -->
+                    <div class="tab-pane fade" id="threads">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Thread Attivi</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>TID</th>
+                                                <th>Priorità</th>
+                                                <th>Stato</th>
+                                                <th>RIP</th>
+                                                <th>RSP</th>
+                                                <th>RBP</th>
+                                                <th>Azioni</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="threads-list"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modules View -->
+                    <div class="tab-pane fade" id="modules">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Moduli Caricati</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Nome</th>
+                                                <th>Base</th>
+                                                <th>Dimensione</th>
+                                                <th>Entry Point</th>
+                                                <th>Azioni</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="modules-list"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hooks View -->
+                    <div class="tab-pane fade" id="hooks">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Hook Attivi</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Target</th>
+                                                <th>Detour</th>
+                                                <th>Originale</th>
+                                                <th>Nome</th>
+                                                <th>Azioni</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="hooks-list"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Assembly View -->
+                    <div class="tab-pane fade" id="assembly">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Visualizzazione Assembly</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="assembly-address" placeholder="Indirizzo...">
+                                    </div>
+                                    <div class="col-auto">
+                                        <button class="btn btn-primary" id="assembly-disassemble">Disassembla</button>
+                                    </div>
+                                </div>
+                                <div class="assembly-view">
+                                    <pre id="assembly-output"></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calls View -->
+                    <div class="tab-pane fade" id="calls">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Mappa Chiamate</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="calls-network"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.2/dist/vis-network.min.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html> 

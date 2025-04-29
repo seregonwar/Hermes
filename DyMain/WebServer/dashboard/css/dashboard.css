@@ -1,0 +1,107 @@
+/* Layout */
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+/* Sidebar */
+.list-group-item {
+    border: none;
+    border-radius: 0;
+    padding: 0.75rem 1rem;
+}
+
+.list-group-item.active {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+/* Cards */
+.card {
+    box-shadow: 0 2px 4px rgba(0,0,0,.05);
+    margin-bottom: 1rem;
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+/* Memory View */
+.memory-view {
+    display: flex;
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+#memory-hex {
+    margin-right: 2rem;
+}
+
+#memory-ascii {
+    color: #6c757d;
+}
+
+/* Assembly View */
+.assembly-view {
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+#assembly-output {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+/* Calls Network */
+#calls-network {
+    width: 100%;
+    height: 600px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+/* Tables */
+.table-sm td, .table-sm th {
+    padding: 0.5rem;
+}
+
+/* Buttons */
+.btn-outline-light:hover {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+/* Charts */
+canvas {
+    max-width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .col-md-2 {
+        margin-bottom: 1rem;
+    }
+    
+    .memory-view {
+        flex-direction: column;
+    }
+    
+    #memory-hex {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+} 
