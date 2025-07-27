@@ -2,7 +2,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)  
 ![Platform: Windows](https://img.shields.io/badge/platform-Windows-blue)  
 ![Languages: C | C++ | Lua | Python](https://img.shields.io/badge/languages-C%2FC%2B%2B%2C%20Lua%2C%20Python-yellow)
-
+[![Github All Releases](https://img.shields.io/github/downloads/seregonwar/Hermes/total.svg)]()
 ---
 
 **Hermes Dyforge** is an advanced modular suite for dynamic process analysis, designed to provide powerful and flexible tools useful in contexts such as **reverse engineering**, **debugging**, **runtime monitoring**, and **security testing**.
